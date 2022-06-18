@@ -8,7 +8,21 @@ import com.example.myapplication.models.response.User
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
+    private lateinit var mListener : onItemClickListener
+
+    interface onItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
+
     private var userList = mutableListOf<User>()
+
+    fun getUsers() : List<User> {
+        return userList
+    }
 
     fun setUsers(users : List<User>) {
         userList = users.toMutableList()
@@ -18,7 +32,7 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListRowMainBinding.inflate(inflater, parent, false)
-        return MainViewHolder(binding)
+        return MainViewHolder(binding, mListener)
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
@@ -30,8 +44,12 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         return userList.size
     }
 
-    class MainViewHolder(val binding: ListRowMainBinding) : RecyclerView.ViewHolder(binding.root) {
-
+    class MainViewHolder(val binding: ListRowMainBinding, listener: onItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.textView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 
 }

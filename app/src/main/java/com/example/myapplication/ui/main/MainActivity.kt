@@ -1,11 +1,17 @@
 package com.example.myapplication.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.models.response.User
 import com.example.myapplication.ui.base.BaseActivity
+import com.example.myapplication.ui.info.InfoUserActivity
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +29,25 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         setObserverAdapter()
         setObserverViewBindingLoading()
         initAdapter()
+        checkClickedOnUserListener()
 
+    }
+
+    private fun checkClickedOnUserListener() {
+        mAdapter.setOnItemClickListener(object : MainAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+                openInfoUserActivity(mAdapter.getUsers()[position])
+            }
+        })
+    }
+
+    private fun openInfoUserActivity(user : User) {
+        val intent = Intent(this@MainActivity, InfoUserActivity::class.java)
+        with(intent) {
+            val jsonString = Json.encodeToString(user)
+            putExtra("user", jsonString)
+            startActivity(this)
+        }
     }
 
     private fun initAdapter() {
