@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -29,8 +30,28 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         setObserverAdapter()
         setObserverViewBindingLoading()
         initAdapter()
+        checkScrolledDownPageListener()
         checkClickedOnUserListener()
 
+    }
+
+    private fun checkScrolledDownPageListener() {
+        mViewBinding.scrollView.viewTreeObserver.addOnScrollChangedListener(OnScrollChangedListener {
+            val scrollY = mViewBinding.scrollView.scrollY
+            val measuredHeightAtFirstChild = mViewBinding.scrollView.getChildAt(0).measuredHeight
+            val measuredParent = mViewBinding.scrollView.measuredHeight
+            Log.d("Msg", mViewModel.loading.value.toString())
+            Log.d("Msg", scrollY.toString())
+            val number : Int = measuredHeightAtFirstChild - measuredParent
+            Log.d("Msg", number.toString())
+            if (!mViewModel.loading.value!! && scrollY == measuredHeightAtFirstChild - measuredParent) {
+                loadAdditionalUsers()
+            }
+        })
+    }
+
+    private fun loadAdditionalUsers() {
+        mViewModel.getUsersFromServer()
     }
 
     private fun checkClickedOnUserListener() {
@@ -55,7 +76,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mViewBinding.recyclerView.layoutManager = layoutManager
         mViewBinding.recyclerView.adapter = mAdapter
         if(mViewModel.is_loaded.value == false) {
-            mViewModel.getUsersFromServer()
+            loadAdditionalUsers()
         }
     }
 

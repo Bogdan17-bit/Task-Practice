@@ -25,7 +25,7 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     }
 
     fun setUsers(users : List<User>) {
-        userList = users.toMutableList()
+        userList += users.toMutableList()
         notifyDataSetChanged()
     }
 
