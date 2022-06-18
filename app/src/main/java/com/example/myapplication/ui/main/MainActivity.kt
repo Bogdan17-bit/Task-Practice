@@ -40,10 +40,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             val scrollY = mViewBinding.scrollView.scrollY
             val measuredHeightAtFirstChild = mViewBinding.scrollView.getChildAt(0).measuredHeight
             val measuredParent = mViewBinding.scrollView.measuredHeight
-            Log.d("Msg", mViewModel.loading.value.toString())
-            Log.d("Msg", scrollY.toString())
-            val number : Int = measuredHeightAtFirstChild - measuredParent
-            Log.d("Msg", number.toString())
             if (!mViewModel.loading.value!! && scrollY == measuredHeightAtFirstChild - measuredParent) {
                 loadAdditionalUsers()
             }
