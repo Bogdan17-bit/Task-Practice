@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.models.response.User
+import com.example.myapplication.room.AppDatabase
 import com.example.myapplication.ui.base.BaseActivity
 import com.example.myapplication.ui.info.InfoUserActivity
 import kotlinx.serialization.encodeToString
@@ -21,6 +22,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override val mViewModel : MainViewModel by viewModel()
 
     private val mAdapter : MainAdapter by inject()
+
+    private val mDatabase : AppDatabase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
