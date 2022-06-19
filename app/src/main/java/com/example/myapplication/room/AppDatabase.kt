@@ -1,13 +1,13 @@
 package com.example.myapplication.room
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.example.myapplication.models.database.UserDatabase
+import com.example.myapplication.utils.Converters
 
-@Database(entities = [UserDatabase::class], version = 1)
-abstract class AppDatabase : RoomDatabase(){
+@Database(entities = [UserDatabase::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao() : UserDatabaseDao
 

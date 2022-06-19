@@ -12,7 +12,7 @@ interface UserDatabaseDao {
     fun getAllUsers() : LiveData<List<UserDatabase>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUsers(user : UserDatabase)
+    suspend fun insertUsers(users : List<UserDatabase>)
 
     //@Update
     //suspend fun updateUsers(vararg users : List<UserDatabase>)

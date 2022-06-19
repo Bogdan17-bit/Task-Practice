@@ -1,10 +1,7 @@
 package com.example.myapplication
 
 import android.app.Application
-import com.example.myapplication.di.AdapterModule
-import com.example.myapplication.di.serviceModule
-import com.example.myapplication.di.userRepositoryModule
-import com.example.myapplication.di.viewModelModule
+import com.example.myapplication.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -22,7 +19,12 @@ class MainApp : Application() {
         startKoin {
             androidContext(this@MainApp) // знадобиться, коли об'єкт потребує контекст застосунку
             androidLogger(Level.DEBUG)  //  рівень помилок
-            modules(listOf(viewModelModule, serviceModule, userRepositoryModule, AdapterModule))
+            modules(listOf(
+                viewModelModule,
+                serviceModule,
+                userRepositoryModule,
+                AdapterModule,
+                databaseModule))
         }
     }
 
