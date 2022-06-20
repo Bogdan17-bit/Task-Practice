@@ -10,12 +10,12 @@ import com.example.myapplication.models.base.UserBaseManipulation
 @Entity(tableName = "user")
 data class UserDatabase(
     @PrimaryKey(autoGenerate = true)
-    val id : Int?,
-    val name : String?,
-    val fullName : String?,
-    val fullLocation : String?,
-    val phone : String?,
-    val email : String?,
-    val register : String?,
-    val avatar : Bitmap?
+    var id : Int?,
+    var name : String?,
+    var fullName : String?,
+    var fullLocation : String?,
+    var phone : String?,
+    var email : String?,
+    var register : String?,
+    var avatar : Bitmap?
 )

@@ -13,6 +13,7 @@ import com.example.myapplication.room.AppDatabase
 import com.example.myapplication.room.dbrepository.UserRepositoryDb
 import com.example.myapplication.ui.base.BaseActivity
 import com.example.myapplication.ui.info.InfoUserActivity
+import com.example.myapplication.utils.UserConverter
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.android.ext.android.inject
@@ -28,8 +29,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
-
-        AppDatabase.getDatabase(this)
 
         setObserverAdapter()
         setObserverViewBindingLoading()
@@ -83,6 +82,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private fun setObserverAdapter() {
         mViewModel.usersList.observe(this) {
             mAdapter.setUsers(it)
+            mViewModel.getUsersDatabaseFromServerUsers(it[0])
         }
     }
 

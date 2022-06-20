@@ -10,8 +10,8 @@ class UserRepositoryDb(private val userDao : UserDatabaseDao) {
 
     val readAllData : LiveData<List<UserDatabase>> = userDao.getAllUsers()
 
-    suspend fun addUser(users : List<UserDatabase>) {
-        userDao.insertUsers(users)
+    suspend fun addUsers(user : UserDatabase) {
+        userDao.insertUsers(user)
     }
 
 }

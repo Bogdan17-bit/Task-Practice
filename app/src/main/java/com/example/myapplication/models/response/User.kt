@@ -72,5 +72,8 @@ data class User(
         return register.date + ", " + register.age
     }
 
+    override fun getPictureUrl(): String {
+        return picture.url
+    }
 }
 

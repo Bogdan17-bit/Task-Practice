@@ -9,5 +9,11 @@ import com.example.myapplication.room.dbrepository.UserRepositoryDb
 import org.koin.dsl.module
 
 val databaseModule = module {
+    single {
+        UserRepositoryDb(getUserDao(get()))
+    }
+}
 
+fun getUserDao(context : Context) : UserDatabaseDao {
+    return AppDatabase.getDatabase(context).userDao()
 }

@@ -17,4 +17,7 @@ interface UserBaseManipulation {
     fun getEmail() : String
 
     fun getRegisteredData() : String
+
+    fun getPictureUrl() : String
+
 }

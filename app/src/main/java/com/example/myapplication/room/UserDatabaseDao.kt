@@ -11,8 +11,8 @@ interface UserDatabaseDao {
     @Query("SELECT * FROM user")
     fun getAllUsers() : LiveData<List<UserDatabase>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUsers(users : List<UserDatabase>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertUsers(user : UserDatabase)
 
     //@Update
     //suspend fun updateUsers(vararg users : List<UserDatabase>)
