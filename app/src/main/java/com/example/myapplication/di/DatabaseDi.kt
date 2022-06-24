@@ -12,6 +12,9 @@ val databaseModule = module {
     single {
         UserRepositoryDb(getUserDao(get()))
     }
+    single {
+        AppDatabase.getDatabase(get())
+    }
 }
 
 fun getUserDao(context : Context) : UserDatabaseDao {

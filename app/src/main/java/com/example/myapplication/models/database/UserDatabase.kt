@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.myapplication.models.base.UserBaseManipulation
 
 
-@Entity(tableName = "user")
+@Entity(tableName = "user_table")
 data class UserDatabase(
     @PrimaryKey(autoGenerate = true)
     var id : Int?,

@@ -13,7 +13,10 @@ class UserConverter {
 
     companion object {
 
+        var avatarBitmap : Bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888)
+
         fun getDatabaseUser(user: User): UserDatabase {
+            getBitmap(user.getPictureUrl())
             return UserDatabase(
                 0,
                 user.getShortName(),
@@ -22,16 +25,18 @@ class UserConverter {
                 user.getPhone(),
                 user.getEmail(),
                 user.getRegisteredData(),
-                setBitmap(user.getPictureUrl())
+                avatarBitmap
             )
         }
 
-        private fun setBitmap(url: String): Bitmap? = runBlocking {
+        fun getBitmap(url : String) {
             val urlImage = URL(url)
             val result: Deferred<Bitmap?> = GlobalScope.async {
                 urlImage.toBitmap()
             }
-             result.await()
+            GlobalScope.launch(Dispatchers.Main) {
+                avatarBitmap = result.await()!!
+            }
         }
 
         fun URL.toBitmap(): Bitmap? {

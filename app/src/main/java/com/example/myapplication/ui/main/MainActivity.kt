@@ -25,6 +25,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private val mAdapter : MainAdapter by inject()
 
+    private val mDatabase : AppDatabase by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -82,7 +84,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private fun setObserverAdapter() {
         mViewModel.usersList.observe(this) {
             mAdapter.setUsers(it)
-            mViewModel.getUsersDatabaseFromServerUsers(it[0])
+            mViewModel.getUsersDatabaseFromServerUsers(it[1])
         }
     }
 

@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDatabaseDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user_table")
     fun getAllUsers() : LiveData<List<UserDatabase>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertUsers(user : UserDatabase)
+    suspend fun insertUser(user : UserDatabase)
 
     //@Update
     //suspend fun updateUsers(vararg users : List<UserDatabase>)

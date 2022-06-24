@@ -5,7 +5,7 @@ import androidx.room.*
 import com.example.myapplication.models.database.UserDatabase
 import com.example.myapplication.utils.Converters
 
-@Database(entities = [UserDatabase::class], version = 1, exportSchema = false)
+@Database(entities = [UserDatabase::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
