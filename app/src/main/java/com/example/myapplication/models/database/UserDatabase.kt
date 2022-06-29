@@ -9,8 +9,7 @@ import com.example.myapplication.models.base.UserBaseManipulation
 
 @Entity(tableName = "user_table")
 data class UserDatabase(
-    @PrimaryKey(autoGenerate = true)
-    var id : Int?,
+    @PrimaryKey(autoGenerate = true) var id : Int = 0,
     var name : String?,
     var fullName : String?,
     var fullLocation : String?,

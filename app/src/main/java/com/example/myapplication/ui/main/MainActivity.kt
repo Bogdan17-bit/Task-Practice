@@ -76,7 +76,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         val layoutManager = LinearLayoutManager(this)
         mViewBinding.recyclerView.layoutManager = layoutManager
         mViewBinding.recyclerView.adapter = mAdapter
-        if(mViewModel.is_loaded.value == false) {
+        if (mViewModel.is_loaded.value == false) {
             loadAdditionalUsers()
         }
     }
@@ -84,7 +84,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private fun setObserverAdapter() {
         mViewModel.usersList.observe(this) {
             mAdapter.setUsers(it)
-            mViewModel.getUsersDatabaseFromServerUsers(it[1])
+            for(user in it) {
+                mViewModel.getUsersDatabaseFromServerUsers(user)
+            }
         }
     }
 

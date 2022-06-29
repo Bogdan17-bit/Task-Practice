@@ -43,7 +43,7 @@ class MainViewModel constructor(private var userRepository: UserRepository, priv
     }
 
     fun getUsersDatabaseFromServerUsers(user : User) {
-        saveIntoDatabaseNewUsers(UserConverter.getDatabaseUser(user))
+        UserConverter.convertUserIntoDatabaseUserAndSave(user, repositoryDb)
     }
 
     private fun saveIntoDatabaseNewUsers(userDb : UserDatabase) {
