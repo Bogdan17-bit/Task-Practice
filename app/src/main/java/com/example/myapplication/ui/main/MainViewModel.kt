@@ -33,6 +33,8 @@ class MainViewModel constructor(private var userRepository: UserRepository, priv
     val loading = MutableLiveData<Boolean>()
     val is_loaded = MutableLiveData<Boolean>(false)
 
+    lateinit var usersFromDb : LiveData<List<UserDatabase>>
+
     init {
         Log.d("Msg", "MainViewModel is created!")
     }
@@ -46,15 +48,9 @@ class MainViewModel constructor(private var userRepository: UserRepository, priv
         UserConverter.convertUserIntoDatabaseUserAndSave(user, repositoryDb)
     }
 
-    private fun saveIntoDatabaseNewUsers(userDb : UserDatabase) {
-        viewModelScope.launch (Dispatchers.IO) {
-            repositoryDb.addUser(userDb)
-        }
-    }
-
     fun getAllUsersFromDatabase() {
         viewModelScope.launch (Dispatchers.IO){
-            var users = repositoryDb.readAllData
+             usersFromDb =  repositoryDb.readAllData
         }
     }
 

@@ -13,6 +13,7 @@ import com.example.myapplication.room.AppDatabase
 import com.example.myapplication.room.dbrepository.UserRepositoryDb
 import com.example.myapplication.ui.base.BaseActivity
 import com.example.myapplication.ui.info.InfoUserActivity
+import com.example.myapplication.utils.Network
 import com.example.myapplication.utils.UserConverter
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -38,6 +39,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         checkScrolledDownPageListener()
         checkClickedOnUserListener()
 
+        controlInternetConnection()
+
+    }
+
+    private fun controlInternetConnection() {
+        if(!Network.isNetworkAvailable(this)) {
+            mViewModel.getAllUsersFromDatabase()
+        }
     }
 
     private fun checkScrolledDownPageListener() {
