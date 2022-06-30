@@ -16,6 +16,7 @@ import org.koin.android.ext.android.inject
 import com.example.myapplication.models.response.User
 import com.example.myapplication.room.AppDatabase
 import com.example.myapplication.room.dbrepository.UserRepositoryDb
+import com.example.myapplication.utils.Network
 import com.example.myapplication.utils.UserConverter
 import kotlinx.coroutines.*
 import okhttp3.Dispatcher
@@ -30,16 +31,18 @@ class MainViewModel constructor(private var userRepository: UserRepository, priv
     var job : Job? = null
 
     val usersList = MutableLiveData<List<User>>()
-    val loading = MutableLiveData<Boolean>()
+    val loading = MutableLiveData<Boolean>(false)
     val is_loaded = MutableLiveData<Boolean>(false)
 
-    lateinit var usersFromDb : LiveData<List<UserDatabase>>
+    var usersFromDb : LiveData<List<UserDatabase>>
 
     init {
         Log.d("Msg", "MainViewModel is created!")
+        usersFromDb = repositoryDb.readAllData
     }
 
     override fun onCleared() {
+        Log.d("Msg", "MainViewModel is cleared!")
         super.onCleared()
         job?.cancel()
     }
@@ -48,13 +51,10 @@ class MainViewModel constructor(private var userRepository: UserRepository, priv
         UserConverter.convertUserIntoDatabaseUserAndSave(user, repositoryDb)
     }
 
-    fun getAllUsersFromDatabase() {
-        viewModelScope.launch (Dispatchers.IO){
-             usersFromDb =  repositoryDb.readAllData
+    fun getUsersFromServer(context : Context) {
+        if(!Network.isNetworkAvailable(context)) {
+            return
         }
-    }
-
-    fun getUsersFromServer() {
         job = CoroutineScope(Dispatchers.IO).launch {
             loading.postValue(true)
             val response = userRepository.repoGetUsers(Random.nextInt(0, 100))

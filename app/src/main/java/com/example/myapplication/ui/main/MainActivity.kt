@@ -33,20 +33,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
 
-        setObserverAdapter()
+        setObserverSaveToDatabase()
         setObserverViewBindingLoading()
         initAdapter()
         checkScrolledDownPageListener()
         checkClickedOnUserListener()
+        setObserverAdapter()
 
-        controlInternetConnection()
-
-    }
-
-    private fun controlInternetConnection() {
-        if(!Network.isNetworkAvailable(this)) {
-            mViewModel.getAllUsersFromDatabase()
-        }
     }
 
     private fun checkScrolledDownPageListener() {
@@ -61,22 +54,21 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     private fun loadAdditionalUsers() {
-        mViewModel.getUsersFromServer()
+        mViewModel.getUsersFromServer(this)
     }
 
     private fun checkClickedOnUserListener() {
         mAdapter.setOnItemClickListener(object : MainAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
-                openInfoUserActivity(mAdapter.getUsers()[position])
+                openInfoUserActivity(mAdapter.getUsers()[position].getFullName())
             }
         })
     }
 
-    private fun openInfoUserActivity(user : User) {
+    private fun openInfoUserActivity(userFullName : String) {
         val intent = Intent(this@MainActivity, InfoUserActivity::class.java)
         with(intent) {
-            val jsonString = Json.encodeToString(user)
-            putExtra("user", jsonString)
+            putExtra("userFullName", userFullName)
             startActivity(this)
         }
     }
@@ -90,11 +82,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         }
     }
 
-    private fun setObserverAdapter() {
+    private fun setObserverSaveToDatabase() {
         mViewModel.usersList.observe(this) {
             mAdapter.setUsers(it)
             for(user in it) {
                 mViewModel.getUsersDatabaseFromServerUsers(user)
+            }
+        }
+    }
+
+    private fun setObserverAdapter() {
+        mViewModel.usersFromDb.observe(this) {
+            if(!Network.isNetworkAvailable(this)) {
+                mAdapter.setUsers(it)
             }
         }
     }

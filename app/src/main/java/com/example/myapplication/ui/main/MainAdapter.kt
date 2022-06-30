@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ListRowMainBinding
+import com.example.myapplication.models.database.UserDatabase
 import com.example.myapplication.models.response.User
+import com.example.myapplication.ui.base.BaseUser
 
 class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
@@ -18,13 +20,13 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         mListener = listener
     }
 
-    private var userList = mutableListOf<User>()
+    private var userList = mutableListOf<BaseUser>()
 
-    fun getUsers() : List<User> {
+    fun getUsers() : List<BaseUser> {
         return userList
     }
 
-    fun setUsers(users : List<User>) {
+    fun setUsers(users : List<BaseUser>) {
         userList += users.toMutableList()
         notifyDataSetChanged()
     }
@@ -37,7 +39,7 @@ class MainAdapter: RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val user = userList[position]
-        holder.binding.textView.text = user.getShortName()
+        holder.binding.textView.text = user.getName()
     }
 
     override fun getItemCount(): Int {

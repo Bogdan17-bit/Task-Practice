@@ -2,13 +2,11 @@ package com.example.myapplication.models.response
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.ImageView
-import com.example.myapplication.models.base.UserBaseManipulation
+import com.example.myapplication.ui.base.BaseUser
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
-import retrofit2.http.Url
 import java.io.IOException
 import java.net.URL
 
@@ -26,9 +24,9 @@ data class User(
     private val phone : String,
     @SerializedName("picture")
     private val picture : Picture,
-) : UserBaseManipulation {
+) : BaseUser() {
 
-    override fun getShortName(): String {
+    override fun getName(): String {
         return name.first
     }
 
@@ -68,11 +66,11 @@ data class User(
         return email
     }
 
-    override fun getRegisteredData(): String {
+    override fun getRegister(): String {
         return register.date + ", " + register.age
     }
 
-    override fun getPictureUrl(): String {
+    fun getPictureUrl(): String {
         return picture.url
     }
 }

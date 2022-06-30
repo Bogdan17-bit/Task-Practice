@@ -31,12 +31,12 @@ class UserConverter {
         private fun convert(avatar: Bitmap, user : User, userRepositoryDb: UserRepositoryDb) {
             val dbUser = UserDatabase(
                 0,
-                user.getShortName(),
+                user.getName(),
                 user.getFullName(),
                 user.getFullLocation(),
                 user.getPhone(),
                 user.getEmail(),
-                user.getRegisteredData(),
+                user.getRegister(),
                 avatar
             )
             GlobalScope.launch(Dispatchers.IO) {

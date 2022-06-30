@@ -10,6 +10,6 @@ val viewModelModule = module {
         MainViewModel(get(), get())
     }
     viewModel{
-        InfoViewModel()
+        InfoViewModel(get())
     }
 }

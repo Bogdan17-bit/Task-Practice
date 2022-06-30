@@ -4,7 +4,7 @@ import android.widget.ImageView
 
 interface UserBaseManipulation {
 
-    fun getShortName() : String
+    fun getName() : String
 
     fun getFullName() : String
 
@@ -16,8 +16,6 @@ interface UserBaseManipulation {
 
     fun getEmail() : String
 
-    fun getRegisteredData() : String
-
-    fun getPictureUrl() : String
+    fun getRegister() : String
 
 }

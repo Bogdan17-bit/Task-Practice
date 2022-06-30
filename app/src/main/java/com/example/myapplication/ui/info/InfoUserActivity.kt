@@ -17,22 +17,20 @@ class InfoUserActivity : BaseActivity<InfoViewModel, ActivityInfoUserBinding>() 
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
         getUserFromIntent()
-        setObserverUserData()
     }
 
     private fun getUserFromIntent() {
-        val userStr : String = intent.getStringExtra("user").toString()
-        val user : User = Json.decodeFromString(userStr)
-        mViewModel.setUserData(user)
+        val userFullName : String = intent.getStringExtra("userFullName").toString()
+        setObserverUserData(userFullName)
     }
 
-    private fun setObserverUserData() {
-        mViewModel.user.observe(this, Observer {
+    private fun setObserverUserData(name : String) {
+        mViewModel.getUserFromName(name).observe(this, Observer {
             mViewBinding.nameTextView.text = it.getFullName()
             mViewBinding.emailTextView.text = it.getEmail()
             mViewBinding.phoneTextView.text = it.getPhone()
             mViewBinding.locationTextView.text = it.getFullLocation()
-            mViewBinding.registerTextView.text = it.getRegisteredData()
+            mViewBinding.registerTextView.text = it.getRegister()
             it.setImageBitmap(mViewBinding.avatarImageView)
         })
     }
